@@ -17,15 +17,50 @@
 
     /* Header styling with logo */
     header { background: #ffb400; padding: 20px 0; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; position: relative; }
     .logo { display: flex; align-items: center; }
     .logo a { text-decoration: none; display: flex; align-items: center; }
     .logo svg { max-height: 50px; }
+
+    /* Navigation styling */
     nav ul { display: flex; list-style: none; }
     nav ul li { margin: 0 15px; }
     nav ul li a { color: #fff; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: color 0.3s ease; }
     nav ul li a:hover { color: #fff2cc; }
-    
+
+    /* Hamburger Menu for Mobile */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: #ffb400;
+        display: none;
+      }
+      nav ul li {
+        margin: 15px 0;
+        text-align: center;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
     /* Apply animation to connecting lines in neuron */
     #neuron line {
       stroke-dasharray: 5, 5;
@@ -125,8 +160,14 @@
           </svg>
         </a>
       </div>
+      <!-- Hamburger Menu Toggle -->
+      <div class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <nav>
-        <ul>
+        <ul id="nav-list">
           <li><a href="#hero">Home</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#slideshow">AI Future</a></li>
@@ -389,7 +430,6 @@
   <script>
     // Function to trigger neuron animation overlay (if needed) then open Calendly link
     function bookConsultation() {
-      // Here, we trigger the animation on the neuron (if desired) before opening the link.
       window.open("https://calendly.com/datayog/30min", "_blank");
       return false;
     }
@@ -418,13 +458,17 @@
       updateSlider();
     }, 5000);
 
-    // Optional: Smooth scroll function if needed on other buttons
-    function scrollToSection(id) {
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
+    // Mobile navigation toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navList = document.getElementById('nav-list');
+    menuToggle.addEventListener('click', () => {
+      if (navList.style.display === "flex") {
+        navList.style.display = "none";
+      } else {
+        navList.style.display = "flex";
+        navList.style.flexDirection = "column";
       }
-    }
+    });
   </script>
 </body>
 </html>
