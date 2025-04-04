@@ -11,9 +11,9 @@
     body { font-family: 'Roboto', sans-serif; background: #f4f4f4; color: #333; overflow-x: hidden; }
     .container { width: 90%; max-width: 1200px; margin: auto; padding: 0 15px; }
 
-    /* Header */
+    /* Header & Navigation */
     header { background: #002D62; padding: 20px 0; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; position: relative; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; }
     .logo a { text-decoration: none; display: flex; align-items: center; }
     .logo svg { max-height: 50px; }
     nav ul { display: flex; list-style: none; }
@@ -28,14 +28,14 @@
       .menu-toggle { display: flex; }
     }
 
-    /* Neuron Logo Animation - using bright diamond colour (#b9f2ff) */
+    /* Neuron Logo Animation */
     @keyframes dash { to { stroke-dashoffset: 20; } }
     #neuron line {
       stroke-dasharray: 5, 5;
       animation: dash 2s linear infinite;
     }
 
-    /* Hero Section with AI/Tech Background Video */
+    /* Hero Section with Background Video */
     .hero { position: relative; height: 100vh; overflow: hidden; text-align: center; }
     .hero video { 
       position: absolute; 
@@ -53,10 +53,10 @@
       overflow: hidden;
       border-right: .15em solid #fff;
       white-space: nowrap;
-      margin: 0 auto;
+      margin: 0 auto 30px;
       letter-spacing: .15em;
       font-size: 1.3rem;
-      width: 0; /* Start hidden */
+      width: 0;
       animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
     }
     @keyframes typing {
@@ -135,6 +135,15 @@
     .approach { background: #eef4f9; padding: 60px 0; text-align: center; }
     .approach h2 { font-size: 2.5rem; margin-bottom: 30px; color: #002D62; }
     .approach p { font-size: 1.1rem; line-height: 1.6; max-width: 800px; margin: auto; }
+
+    /* AI Game Section (Rock, Paper, Scissors) */
+    .game { background: #eef4f9; padding: 60px 0; text-align: center; }
+    .game h2 { font-size: 2.5rem; margin-bottom: 20px; color: #002D62; }
+    .game p { font-size: 1.1rem; margin-bottom: 20px; color: #333; }
+    .game .buttons { margin: 20px 0; }
+    .game button { padding: 10px 20px; font-size: 1.1rem; margin: 0 10px; border: none; background: #002D62; color: #fff; cursor: pointer; border-radius: 5px; transition: background 0.3s ease; }
+    .game button:hover { background: #001a42; }
+    .game #gameResult { margin-top: 20px; font-size: 1.2rem; color: #002D62; }
 
     /* FAQ Section */
     .faq { background: #fff; padding: 60px 0; }
@@ -231,6 +240,15 @@
       border-bottom-right-radius: 10px;
       cursor: pointer;
     }
+    .sample-question {
+      cursor: pointer;
+      background: #eef4f9;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 5px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -253,7 +271,6 @@
           </svg>
         </a>
       </div>
-      <!-- Hamburger Menu for Mobile -->
       <div class="menu-toggle" id="mobile-menu">
         <span></span>
         <span></span>
@@ -265,6 +282,7 @@
           <li><a href="#services">Services</a></li>
           <li><a href="#slideshow">AI Future</a></li>
           <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#game">AI Game</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#about-section">About</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -274,23 +292,20 @@
     </div>
   </header>
 
-  <!-- Hero Section with AI/Tech Background Video -->
+  <!-- Hero Section with Background Video -->
   <section id="hero" class="hero">
-    <!-- Background video sourced from Pixabay -->
     <video autoplay muted loop>
       <source src="https://cdn.pixabay.com/video/2020/06/24/43022-434334062_tiny.mp4" />
       Your browser does not support the video tag.
     </video>
     <div class="hero-content container">
       <h1>Welcome to AmiAI</h1>
-      <!-- Animated Tagline with Typewriter Effect -->
       <p class="animated-tagline">Transform your business with AI-powered automation</p>
-      <!-- Button triggers the modal popup -->
-      <button onclick="openModal()">Start your AI Journey for Free</button>
+      <button onclick="openFreeJourney()">Start your AI Journey for Free</button>
     </div>
   </section>
 
-  <!-- Modal Popup for User Inquiry -->
+  <!-- Modal Popup for User Inquiry (if needed) -->
   <div id="popupModal" class="modal">
     <div class="modal-content">
       <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -325,19 +340,17 @@
     </div>
   </section>
 
-  <!-- Slideshow Section - AI Impact -->
+  <!-- Slideshow Section -->
   <section id="slideshow" class="slideshow">
     <div class="container">
       <h2>AI Impact on Business</h2>
       <div class="slider">
         <div class="slides">
-          <!-- Example slide -->
           <div class="slide">
             <h3>$15.7 Trillion</h3>
             <p>Projected global economic impact by 2030</p>
             <span>Source: PwC, 2017</span>
           </div>
-          <!-- More slides can be added here -->
         </div>
         <div class="slider-controls">
           <button id="prev">&#10094;</button>
@@ -352,8 +365,22 @@
     <div class="container">
       <h2>Our Approach</h2>
       <p>
-        At AmiAI, our mission is to empower businesses with intelligent automation solutions. We collaborate closely with our clients to understand their unique challenges and develop scalable, ethical, and transparent AI strategies that drive efficiency and growth.
+        At AmiAI, our mission is to empower businesses with intelligent automation solutions. We work closely with our clients to understand their unique challenges and craft scalable, ethical, and transparent AI strategies that drive growth.
       </p>
+    </div>
+  </section>
+
+  <!-- AI Game Section: Rock, Paper, Scissors -->
+  <section id="game" class="game">
+    <div class="container">
+      <h2>AI Game: Rock, Paper, Scissors</h2>
+      <p>Challenge the AI! Choose your move below and see if you can beat the computer.</p>
+      <div class="buttons">
+        <button onclick="playGame('rock')">Rock</button>
+        <button onclick="playGame('paper')">Paper</button>
+        <button onclick="playGame('scissors')">Scissors</button>
+      </div>
+      <div id="gameResult"></div>
     </div>
   </section>
 
@@ -363,23 +390,19 @@
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
         <h3>What services does AmiAI offer?</h3>
-        <p>We provide comprehensive consulting, custom AI automation solutions, and dedicated support to transform your business operations.</p>
+        <p>We provide consulting, custom AI automation solutions, and dedicated support to transform your business operations.</p>
       </div>
       <div class="faq-item">
         <h3>How can AI improve my business?</h3>
-        <p>AI can streamline processes, reduce costs, enhance productivity, and deliver actionable insights for better decision-making.</p>
+        <p>AI streamlines processes, reduces costs, boosts productivity, and delivers actionable insights for smarter decision-making.</p>
       </div>
       <div class="faq-item">
         <h3>Which industries benefit from your solutions?</h3>
-        <p>Our tailored solutions are ideal for finance, healthcare, retail, manufacturing, and many other sectors.</p>
+        <p>Our tailored solutions work for finance, healthcare, retail, manufacturing, and more.</p>
       </div>
       <div class="faq-item">
         <h3>How do I get started?</h3>
-        <p>Simply click on the "Start your AI Journey for Free" button and fill in your details in the popup form.</p>
-      </div>
-      <div class="faq-item">
-        <h3>Are your solutions scalable?</h3>
-        <p>Yes, our AI tools are built to grow with your business, ensuring long-term success and efficiency.</p>
+        <p>Simply click on the "Start your AI Journey for Free" button or contact us directly.</p>
       </div>
       <div class="faq-item">
         <h3>What sets AmiAI apart?</h3>
@@ -387,11 +410,7 @@
       </div>
       <div class="faq-item">
         <h3>How do you ensure data security?</h3>
-        <p>We adhere to industry best practices and data protection regulations to keep your information secure.</p>
-      </div>
-      <div class="faq-item">
-        <h3>What is the typical project timeline?</h3>
-        <p>Timelines vary by project, but we work collaboratively to set realistic milestones and ensure timely delivery.</p>
+        <p>We follow industry best practices and data protection regulations to keep your information secure.</p>
       </div>
       <div class="faq-item">
         <h3>Do you offer post-implementation support?</h3>
@@ -404,14 +423,14 @@
   <section id="newsletter" class="newsletter">
     <div class="container">
       <h2>Subscribe for Updates</h2>
-      <form>
+      <form id="newsletterForm">
         <input type="email" placeholder="Enter your email" required />
         <button type="submit">Subscribe</button>
       </form>
     </div>
   </section>
 
-  <!-- About Us & Privacy Policy Section -->
+  <!-- About & Privacy Section -->
   <section id="about-section" class="about-section">
     <div class="container">
       <h2>About Us & Privacy Policy</h2>
@@ -474,7 +493,12 @@
   </div>
 
   <script>
-    // Modal Popup Functions
+    // Function to open the Google Forms link in a new tab
+    function openFreeJourney() {
+      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
+    }
+
+    // Modal Popup Functions (if needed)
     function openModal() {
       document.getElementById("popupModal").style.display = "block";
     }
@@ -488,41 +512,14 @@
       }
     };
 
-    // GitHub configuration for storing user data
-    const githubRepoOwner = 'souravkarma';
-    const githubRepoName = 'AmiAI';
-    const githubToken = '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';
-    const githubApiUrl = `https://api.github.com/repos/${githubRepoOwner}/${githubRepoName}/issues`;
-
-    // Handle Popup Form Submission - create a GitHub issue for each inquiry
-    document.getElementById("popupForm").addEventListener("submit", function(e) {
+    // Override form submissions to open Google Forms link
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      var email = document.getElementById("popupEmail").value;
-      var phone = document.getElementById("popupPhone").value;
-      var objective = document.getElementById("popupObjective").value;
-      var issueTitle = "New Inquiry from " + email;
-      var issueBody = "Phone: " + phone + "\nObjective: " + objective;
-
-      fetch(githubApiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "token " + githubToken
-        },
-        body: JSON.stringify({
-          title: issueTitle,
-          body: issueBody
-        })
-      })
-      .then(response => response.json())
-      .then(result => {
-        alert("Your information has been saved to GitHub!");
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("There was an error saving your information.");
-      });
-      closeModal();
+      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
+    });
+    document.getElementById("newsletterForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
     });
 
     // Slideshow functionality
@@ -557,20 +554,16 @@
       }
     });
 
-    // Chatbot Feature with sample questions
+    // Chatbot Feature with sample clickable questions
     const faqData = [
-      { question: "what services does amiai offer", answer: "We provide comprehensive consulting, custom AI automation solutions, and dedicated support." },
-      { question: "how can ai improve my business", answer: "AI can streamline processes, reduce costs, enhance productivity, and deliver actionable insights." },
-      { question: "which industries benefit", answer: "Our solutions benefit finance, healthcare, retail, manufacturing, and more." },
-      { question: "how do i get started", answer: "Click the 'Start your AI Journey for Free' button and fill in your details." },
-      { question: "are your solutions scalable", answer: "Yes, our AI tools grow with your business ensuring long-term success." },
-      { question: "what sets amiai apart", answer: "Transparency, ethical practices, and customized strategies set us apart." },
-      { question: "how do you ensure data security", answer: "We adhere to industry best practices and data protection regulations." },
-      { question: "what is the project timeline", answer: "Timelines vary; we set realistic milestones collaboratively with our clients." },
-      { question: "do you offer post-implementation support", answer: "Yes, we provide ongoing support and maintenance post-deployment." }
+      { question: "What services does AmiAI offer?", answer: "We provide consulting, custom AI automation solutions, and dedicated support." },
+      { question: "How can AI improve my business?", answer: "AI streamlines processes, reduces costs, and delivers actionable insights." },
+      { question: "Which industries benefit from your solutions?", answer: "Our solutions benefit finance, healthcare, retail, manufacturing, and more." },
+      { question: "How do I get started?", answer: "Click the 'Start your AI Journey for Free' button to begin." },
+      { question: "What sets AmiAI apart?", answer: "We combine transparency, ethical practices, and customized strategies for measurable impact." },
+      { question: "How do you ensure data security?", answer: "We adhere to industry best practices and data protection regulations." },
+      { question: "Do you offer post-implementation support?", answer: "Yes, we provide ongoing support after deployment." }
     ];
-
-    // Toggle Chatbot: When opening, display sample questions
     function toggleChatbot() {
       const chatbotWindow = document.getElementById("chatbotWindow");
       const messageContainer = document.getElementById("chatbotMessages");
@@ -578,43 +571,71 @@
         chatbotWindow.style.display = "none";
       } else {
         chatbotWindow.style.display = "flex";
-        if (messageContainer.innerHTML.trim() === "") {
-          let welcomeMsg = document.createElement("div");
-          welcomeMsg.style.marginBottom = "10px";
-          welcomeMsg.textContent = "Welcome! Try asking: 'What services does AmiAI offer?', 'How can AI improve my business?', etc.";
-          messageContainer.appendChild(welcomeMsg);
-        }
+        messageContainer.innerHTML = "";
+        let sampleContainer = document.createElement("div");
+        sampleContainer.style.marginBottom = "10px";
+        sampleContainer.textContent = "Click a sample question:";
+        faqData.forEach(item => {
+          let sampleBox = document.createElement("div");
+          sampleBox.className = "sample-question";
+          sampleBox.textContent = item.question;
+          sampleBox.onclick = () => {
+            document.getElementById("chatbotInput").value = item.question;
+            sendChat();
+          };
+          sampleContainer.appendChild(sampleBox);
+        });
+        messageContainer.appendChild(sampleContainer);
       }
     }
-
     function sendChat() {
       const inputField = document.getElementById("chatbotInput");
       const messageContainer = document.getElementById("chatbotMessages");
       let userText = inputField.value.trim();
       if (!userText) return;
-      
-      // Display user message
       let userMsg = document.createElement("div");
       userMsg.textContent = "You: " + userText;
       messageContainer.appendChild(userMsg);
-
-      // Find matching FAQ answer (simple substring matching)
       let answerFound = "Sorry, I don't have an answer for that.";
       let lowerText = userText.toLowerCase();
       faqData.forEach(faq => {
-        if(lowerText.includes(faq.question)) {
+        if(lowerText.includes(faq.question.toLowerCase())) {
           answerFound = faq.answer;
         }
       });
-      
       let botMsg = document.createElement("div");
       botMsg.style.marginTop = "10px";
       botMsg.textContent = "Bot: " + answerFound;
       messageContainer.appendChild(botMsg);
-
-      // Clear input and scroll to bottom
       inputField.value = "";
       messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
+    // Reset tagline animation every 15 seconds
+    setInterval(() => {
+      const tagline = document.querySelector('.animated-tagline');
+      tagline.style.animation = 'none';
+      void tagline.offsetWidth;
+      tagline.style.animation = 'typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite';
+    }, 15000);
+
+    // AI Game: Rock, Paper, Scissors logic
+    function playGame(userChoice) {
+      const choices = ["rock", "paper", "scissors"];
+      const aiChoice = choices[Math.floor(Math.random() * choices.length)];
+      let result = "";
+      if(userChoice === aiChoice) {
+        result = "It's a tie!";
+      } else if (
+        (userChoice === "rock" && aiChoice === "scissors") ||
+        (userChoice === "paper" && aiChoice === "rock") ||
+        (userChoice === "scissors" && aiChoice === "paper")
+      ) {
+        result = "You win!";
+      } else {
+        result = "You lose!";
+      }
+      document.getElementById("gameResult").textContent = "You chose " + userChoice + ". AI chose " + aiChoice + ". " + result;
     }
   </script>
 </body>
