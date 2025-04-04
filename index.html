@@ -48,17 +48,24 @@
     }
     .hero .hero-content { position: relative; top: 50%; transform: translateY(-50%); color: #fff; }
     .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
-    .hero p { font-size: 1.3rem; margin-bottom: 30px; }
-    /* Blinking dot animation for the tagline */
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
+    /* Animated Tagline with Typewriter Effect */
+    .animated-tagline {
+      overflow: hidden;
+      border-right: .15em solid #fff;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .15em;
+      font-size: 1.3rem;
+      width: 0; /* Start hidden */
+      animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
     }
-    .blinking-dot {
-      display: inline-block;
-      width: 10px;
-      animation: blink 1s infinite;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #fff; }
     }
     .hero button { 
       padding: 15px 30px; font-size: 1.1rem; border: none; 
@@ -276,10 +283,10 @@
     </video>
     <div class="hero-content container">
       <h1>Welcome to AmiAI</h1>
-      <!-- Tagline with blinking dot at the end -->
-      <p>Transform your business with AI-powered automation<span class="blinking-dot">.</span></p>
+      <!-- Animated Tagline with Typewriter Effect -->
+      <p class="animated-tagline">Transform your business with AI-powered automation</p>
       <!-- Button triggers the modal popup -->
-      <button onclick="openModal()">Start your Free AI Journey</button>
+      <button onclick="openModal()">Start your AI Journey for Free</button>
     </div>
   </section>
 
@@ -324,76 +331,13 @@
       <h2>AI Impact on Business</h2>
       <div class="slider">
         <div class="slides">
+          <!-- Example slide -->
           <div class="slide">
             <h3>$15.7 Trillion</h3>
             <p>Projected global economic impact by 2030</p>
             <span>Source: PwC, 2017</span>
           </div>
-          <div class="slide">
-            <h3>40% Productivity Increase</h3>
-            <p>Boost efficiency across industries</p>
-            <span>Source: Accenture, 2018</span>
-          </div>
-          <div class="slide">
-            <h3>50% Faster Growth</h3>
-            <p>Accelerated business expansion with AI</p>
-            <span>Source: McKinsey, 2019</span>
-          </div>
-          <div class="slide">
-            <h3>35% CAGR</h3>
-            <p>Strong annual growth in AI adoption</p>
-            <span>Source: IDC, 2020</span>
-          </div>
-          <div class="slide">
-            <h3>$190 Billion</h3>
-            <p>Market size projection by 2025</p>
-            <span>Source: Tractica, 2020</span>
-          </div>
-          <div class="slide">
-            <h3>30% Cost Reduction</h3>
-            <p>Lower operational costs through automation</p>
-            <span>Source: Capgemini, 2019</span>
-          </div>
-          <div class="slide">
-            <h3>270% Increase in Adoption</h3>
-            <p>Rapid uptake among small businesses</p>
-            <span>Source: Deloitte, 2018</span>
-          </div>
-          <div class="slide">
-            <h3>89% Increased Revenue</h3>
-            <p>Revenue growth reported by businesses</p>
-            <span>Source: McKinsey, 2021</span>
-          </div>
-          <div class="slide">
-            <h3>25% Increase in Customer Satisfaction</h3>
-            <p>Enhanced customer experience with AI</p>
-            <span>Source: Gartner, 2020</span>
-          </div>
-          <div class="slide">
-            <h3>70% Enterprise Integration</h3>
-            <p>Widespread adoption of AI in enterprises</p>
-            <span>Source: IDC, 2020</span>
-          </div>
-          <div class="slide">
-            <h3>20% Faster Decision-Making</h3>
-            <p>Streamlined processes with data-driven insights</p>
-            <span>Source: BCG, 2019</span>
-          </div>
-          <div class="slide">
-            <h3>$150 Billion Annual Savings</h3>
-            <p>Healthcare cost savings with AI</p>
-            <span>Source: Accenture, 2017</span>
-          </div>
-          <div class="slide">
-            <h3>80% Enterprise Investment</h3>
-            <p>Robust funding for AI R&amp;D</p>
-            <span>Source: PwC, 2018</span>
-          </div>
-          <div class="slide">
-            <h3>14% Increase in Global GDP</h3>
-            <p>Potential economic growth from automation</p>
-            <span>Source: McKinsey, 2018</span>
-          </div>
+          <!-- More slides can be added here -->
         </div>
         <div class="slider-controls">
           <button id="prev">&#10094;</button>
@@ -544,25 +488,35 @@
       }
     };
 
-    // Handle Popup Form Submission via AJAX to store data on the server
+    // GitHub configuration for storing user data
+    const githubRepoOwner = 'souravkarma';
+    const githubRepoName = 'AmiAI';
+    const githubToken = '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';
+    const githubApiUrl = `https://api.github.com/repos/${githubRepoOwner}/${githubRepoName}/issues`;
+
+    // Handle Popup Form Submission - create a GitHub issue for each inquiry
     document.getElementById("popupForm").addEventListener("submit", function(e) {
       e.preventDefault();
       var email = document.getElementById("popupEmail").value;
       var phone = document.getElementById("popupPhone").value;
       var objective = document.getElementById("popupObjective").value;
-      var data = { email: email, phone: phone, objective: objective };
+      var issueTitle = "New Inquiry from " + email;
+      var issueBody = "Phone: " + phone + "\nObjective: " + objective;
 
-      // Replace 'saveUserData.php' with your server-side endpoint.
-      fetch("saveUserData.php", {
+      fetch(githubApiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": "token " + githubToken
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          title: issueTitle,
+          body: issueBody
+        })
       })
       .then(response => response.json())
       .then(result => {
-        alert("Your information has been saved!");
+        alert("Your information has been saved to GitHub!");
       })
       .catch(error => {
         console.error("Error:", error);
@@ -603,22 +557,34 @@
       }
     });
 
-    // Chatbot Feature
+    // Chatbot Feature with sample questions
     const faqData = [
-      { question: "what services does amiai offer", answer: "We provide comprehensive consulting, custom AI automation solutions, and dedicated support to transform your business operations." },
-      { question: "how can ai improve my business", answer: "AI can streamline processes, reduce costs, enhance productivity, and deliver actionable insights for better decision-making." },
-      { question: "which industries benefit", answer: "Our tailored solutions are ideal for finance, healthcare, retail, manufacturing, and many other sectors." },
-      { question: "how do i get started", answer: "Simply click on the 'Start your AI Journey for Free' button and fill in your details in the popup form." },
-      { question: "are your solutions scalable", answer: "Yes, our AI tools are built to grow with your business, ensuring long-term success and efficiency." },
-      { question: "what sets amiai apart", answer: "We combine transparency, ethical practices, and customized strategies to deliver measurable business value." },
-      { question: "how do you ensure data security", answer: "We adhere to industry best practices and data protection regulations to keep your information secure." },
-      { question: "what is the typical project timeline", answer: "Timelines vary by project, but we work collaboratively to set realistic milestones and ensure timely delivery." },
-      { question: "do you offer post-implementation support", answer: "Yes, we provide ongoing support and maintenance to ensure continuous success after deployment." }
+      { question: "what services does amiai offer", answer: "We provide comprehensive consulting, custom AI automation solutions, and dedicated support." },
+      { question: "how can ai improve my business", answer: "AI can streamline processes, reduce costs, enhance productivity, and deliver actionable insights." },
+      { question: "which industries benefit", answer: "Our solutions benefit finance, healthcare, retail, manufacturing, and more." },
+      { question: "how do i get started", answer: "Click the 'Start your AI Journey for Free' button and fill in your details." },
+      { question: "are your solutions scalable", answer: "Yes, our AI tools grow with your business ensuring long-term success." },
+      { question: "what sets amiai apart", answer: "Transparency, ethical practices, and customized strategies set us apart." },
+      { question: "how do you ensure data security", answer: "We adhere to industry best practices and data protection regulations." },
+      { question: "what is the project timeline", answer: "Timelines vary; we set realistic milestones collaboratively with our clients." },
+      { question: "do you offer post-implementation support", answer: "Yes, we provide ongoing support and maintenance post-deployment." }
     ];
 
+    // Toggle Chatbot: When opening, display sample questions
     function toggleChatbot() {
       const chatbotWindow = document.getElementById("chatbotWindow");
-      chatbotWindow.style.display = (chatbotWindow.style.display === "flex") ? "none" : "flex";
+      const messageContainer = document.getElementById("chatbotMessages");
+      if (chatbotWindow.style.display === "flex") {
+        chatbotWindow.style.display = "none";
+      } else {
+        chatbotWindow.style.display = "flex";
+        if (messageContainer.innerHTML.trim() === "") {
+          let welcomeMsg = document.createElement("div");
+          welcomeMsg.style.marginBottom = "10px";
+          welcomeMsg.textContent = "Welcome! Try asking: 'What services does AmiAI offer?', 'How can AI improve my business?', etc.";
+          messageContainer.appendChild(welcomeMsg);
+        }
+      }
     }
 
     function sendChat() {
@@ -632,7 +598,7 @@
       userMsg.textContent = "You: " + userText;
       messageContainer.appendChild(userMsg);
 
-      // Find best matching FAQ answer (basic matching)
+      // Find matching FAQ answer (simple substring matching)
       let answerFound = "Sorry, I don't have an answer for that.";
       let lowerText = userText.toLowerCase();
       faqData.forEach(faq => {
