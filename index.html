@@ -241,28 +241,6 @@
       <button onclick="openFreeJourney()">Start your AI Journey for Free</button>
     </div>
   </section>
-<!-- Stock Prediction Section -->
-  <section id="stock-prediction" class="services">
-    <div class="container">
-      <h2>Stock Prediction</h2>
-      <form method="POST" style="display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end;">
-        <input type="text"   name="ticker"     placeholder="Ticker (e.g. RELIANCE.NS)" required />
-        <input type="date"   name="start_date" required />
-        <input type="date"   name="end_date"   required />
-        <button type="submit" style="padding:10px 20px; background:#002D62; color:#fff; border:none; border-radius:5px;">
-          Predict
-        </button>
-      </form>
-      {% if chart_png %}
-        <div style="margin-top:20px;">
-          <img src="data:image/png;base64,{{ chart_png }}" alt="Forecast chart" style="max-width:100%; border:1px solid #ccc;" />
-          <p style="margin-top:10px; font-size:1.1rem;">
-            Recommendation: <strong>{{ recommendation }}</strong>
-          </p>
-        </div>
-      {% endif %}
-    </div>
-  </section>
 
   <!-- Modal Popup -->
   <div id="popupModal" class="modal">
