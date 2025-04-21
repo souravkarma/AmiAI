@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AmiAI - Automate Your Business with AI</title>
+  <title>AmiAi - Automate Your Business with AI</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Base reset and font setup */
@@ -35,6 +35,16 @@
       animation: dash 2s linear infinite;
     }
 
+    /* slow blinking red “robotic eye” for each i‑dot */
+    @keyframes blink-eye-slow {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+    .blinking-dot {
+      fill: red;
+      animation: blink-eye-slow 2s infinite;
+    }
+
     /* Hero Section with Background Video */
     .hero { position: relative; height: 100vh; overflow: hidden; text-align: center; }
     .hero video { 
@@ -48,7 +58,7 @@
     }
     .hero .hero-content { position: relative; top: 50%; transform: translateY(-50%); color: #fff; }
     .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
-    /* Animated Tagline with Typewriter Effect */
+    /* Animated Tagline */
     .animated-tagline {
       overflow: hidden;
       border-right: .15em solid #fff;
@@ -59,14 +69,8 @@
       width: 0;
       animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
     }
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #fff; }
-    }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: #fff; } }
     .hero button { 
       padding: 15px 30px; font-size: 1.1rem; border: none; 
       background: #a1c4fd; color: #002D62; cursor: pointer; 
@@ -74,180 +78,111 @@
     }
     .hero button:hover { background: #89b0f0; }
 
-    /* Modal Popup Styles */
-    .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 1000; 
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-    }
-    .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%; max-width: 500px;
-      position: relative;
-    }
-    .modal-content h2 { margin-bottom: 20px; color: #002D62; }
-    .modal-content input, .modal-content textarea {
-      width: 100%; padding: 10px; margin: 10px 0;
-      border: 1px solid #ccc; border-radius: 5px;
-    }
-    .modal-content button {
-      padding: 10px 20px;
-      background: #002D62; color: #fff;
-      border: none; border-radius: 5px;
-      cursor: pointer;
-    }
-    .modal-content button:hover { background: #001a42; }
-    .close-modal {
-      position: absolute; top: 10px; right: 15px;
-      font-size: 20px; font-weight: bold; color: #002D62;
-      cursor: pointer;
-    }
+    /* Modal Popup */
+    .modal { display: none; position: fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.5); }
+    .modal-content { background:#fff; margin:10% auto; padding:20px; border-radius:8px; width:90%; max-width:500px; position:relative; }
+    .modal-content h2 { margin-bottom:20px; color:#002D62; }
+    .modal-content input, .modal-content textarea { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:5px; }
+    .modal-content button { padding:10px 20px; background:#002D62; color:#fff; border:none; border-radius:5px; cursor:pointer; }
+    .modal-content button:hover { background:#001a42; }
+    .close-modal { position:absolute; top:10px; right:15px; font-size:20px; font-weight:bold; color:#002D62; cursor:pointer; }
 
-    /* Services Section */
-    .services { background: #fff; padding: 60px 0; text-align: center; }
-    .services h2 { margin-bottom: 40px; font-size: 2.5rem; color: #002D62; }
-    .service-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .service-item { background: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; padding: 25px; flex: 1 1 280px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .service-item:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .service-item h3 { margin-bottom: 15px; color: #002D62; }
-    .service-item p { font-size: 1rem; color: #555; }
+    /* Services */
+    .services { background:#fff; padding:60px 0; text-align:center; }
+    .services h2 { margin-bottom:40px; font-size:2.5rem; color:#002D62; }
+    .service-items { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+    .service-item { background:#f9f9f9; border:1px solid #ddd; border-radius:10px; padding:25px; flex:1 1 280px; transition:transform 0.3s,box-shadow 0.3s; }
+    .service-item:hover { transform:translateY(-5px); box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    .service-item h3 { margin-bottom:15px; color:#002D62; }
+    .service-item p  { color:#555; }
 
-    /* Slideshow Section */
-    .slideshow { background: #eef4f9; padding: 60px 0; text-align: center; }
-    .slideshow h2 { font-size: 2.5rem; margin-bottom: 30px; color: #002D62; }
-    .slider { position: relative; max-width: 800px; margin: auto; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .slides { display: flex; transition: transform 0.5s ease-in-out; }
-    .slide { min-width: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .slide h3 { font-size: 2rem; margin-bottom: 10px; color: #002D62; }
-    .slide p { font-size: 1.2rem; margin-bottom: 5px; color: #333; }
-    .slide span { font-size: 0.9rem; color: #777; }
-    .slider-controls { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); }
-    .slider-controls button { background: rgba(255,255,255,0.7); border: none; padding: 10px; border-radius: 50%; cursor: pointer; transition: background 0.3s ease; }
-    .slider-controls button:hover { background: rgba(255,255,255,1); }
+    /* Slideshow */
+    .slideshow { background:#eef4f9; padding:60px 0; text-align:center; }
+    .slideshow h2 { font-size:2.5rem; margin-bottom:30px; color:#002D62; }
+    .slider { position:relative; max-width:800px; margin:auto; overflow:hidden; border-radius:10px; background:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .slides { display:flex; transition:transform 0.5s ease-in-out; }
+    .slide { min-width:100%; padding:40px; display:flex; flex-direction:column; align-items:center; }
+    .slide h3 { font-size:2rem; margin-bottom:10px; color:#002D62; }
+    .slide p  { font-size:1.2rem; margin-bottom:5px; color:#333; }
+    .slide span{ font-size:.9rem; color:#777; }
+    .slider-controls { position:absolute; top:50%; width:100%; display:flex; justify-content:space-between; transform:translateY(-50%); }
+    .slider-controls button { background:rgba(255,255,255,0.7); border:none; padding:10px; border-radius:50%; cursor:pointer; transition:background 0.3s; }
+    .slider-controls button:hover { background:rgba(255,255,255,1); }
 
-    /* Our Approach Section */
-    .approach { background: #eef4f9; padding: 60px 0; text-align: center; }
-    .approach h2 { font-size: 2.5rem; margin-bottom: 30px; color: #002D62; }
-    .approach p { font-size: 1.1rem; line-height: 1.6; max-width: 800px; margin: auto; }
+    /* Approach */
+    .approach { background:#eef4f9; padding:60px 0; text-align:center; }
+    .approach h2 { font-size:2.5rem; margin-bottom:30px; color:#002D62; }
+    .approach p  { font-size:1.1rem; line-height:1.6; max-width:800px; margin:auto; }
 
-    /* AI Game Section (Rock, Paper, Scissors) */
-    .game { background: #eef4f9; padding: 60px 0; text-align: center; }
-    .game h2 { font-size: 2.5rem; margin-bottom: 20px; color: #002D62; }
-    .game p { font-size: 1.1rem; margin-bottom: 20px; color: #333; }
-    .game .buttons { margin: 20px 0; }
-    .game button { padding: 10px 20px; font-size: 1.1rem; margin: 0 10px; border: none; background: #002D62; color: #fff; cursor: pointer; border-radius: 5px; transition: background 0.3s ease; }
-    .game button:hover { background: #001a42; }
-    .game #gameResult { margin-top: 20px; font-size: 1.2rem; color: #002D62; }
+    /* AI Game */
+    .game { background:#eef4f9; padding:60px 0; text-align:center; }
+    .game h2 { font-size:2.5rem; margin-bottom:20px; color:#002D62; }
+    .game p  { font-size:1.1rem; margin-bottom:20px; color:#333; }
+    .game .buttons { margin:20px 0; }
+    .game button { padding:10px 20px; font-size:1.1rem; margin:0 10px; border:none; background:#002D62; color:#fff; border-radius:5px; cursor:pointer; transition:background 0.3s; }
+    .game button:hover { background:#001a42; }
+    .game #gameResult { margin-top:20px; font-size:1.2rem; color:#002D62; }
 
-    /* FAQ Section */
-    .faq { background: #fff; padding: 60px 0; }
-    .faq h2 { font-size: 2.5rem; text-align: center; margin-bottom: 40px; color: #002D62; }
-    .faq-item { max-width: 800px; margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .faq-item h3 { font-size: 1.5rem; margin-bottom: 10px; color: #002D62; }
-    .faq-item p { font-size: 1rem; line-height: 1.6; }
-    
-    /* Newsletter Section */
-    .newsletter { background: #eef4f9; padding: 60px 0; text-align: center; }
-    .newsletter h2 { font-size: 2.5rem; margin-bottom: 20px; color: #002D62; }
-    .newsletter form { max-width: 500px; margin: auto; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .newsletter input[type="email"] { padding: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px; flex: 1 1 300px; }
-    .newsletter button { padding: 15px 25px; font-size: 1.1rem; border: none; background: #002D62; color: #fff; cursor: pointer; border-radius: 5px; transition: background 0.3s ease; }
-    .newsletter button:hover { background: #001a42; }
+    /* FAQ */
+    .faq { background:#fff; padding:60px 0; }
+    .faq h2 { font-size:2.5rem; text-align:center; margin-bottom:40px; color:#002D62; }
+    .faq-item { max-width:800px; margin:20px auto; padding:20px; background:#f9f9f9; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    .faq-item h3 { margin-bottom:10px; color:#002D62; }
+    .faq-item p  { line-height:1.6; }
 
-    /* About & Privacy Section */
-    .about-section { background: #fff; padding: 60px 0; }
-    .about-section h2 { font-size: 2.5rem; text-align: center; margin-bottom: 40px; color: #002D62; }
-    .about-columns { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
-    .about-column { flex: 1 1 300px; background: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .about-column h3 { font-size: 1.8rem; margin-bottom: 15px; color: #002D62; }
-    .about-column p { font-size: 1rem; line-height: 1.6; color: #333; }
+    /* Newsletter */
+    .newsletter { background:#eef4f9; padding:60px 0; text-align:center; }
+    .newsletter h2 { font-size:2.5rem; margin-bottom:20px; color:#002D62; }
+    .newsletter form { max-width:500px; margin:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .newsletter input[type="email"] { padding:15px; font-size:1rem; border:1px solid #ccc; border-radius:5px; flex:1 1 300px; }
+    .newsletter button { padding:15px 25px; font-size:1.1rem; border:none; background:#002D62; color:#fff; border-radius:5px; cursor:pointer; transition:background 0.3s; }
+    .newsletter button:hover { background:#001a42; }
 
-    /* Contact Section */
-    .contact { background: #eef4f9; padding: 60px 0; text-align: center; }
-    .contact h2 { font-size: 2.5rem; margin-bottom: 30px; color: #002D62; }
-    .contact form { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
-    .contact form input, .contact form textarea { padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; width: 100%; }
-    .contact form button { padding: 15px; font-size: 1.1rem; border: none; background: #002D62; color: #fff; cursor: pointer; border-radius: 5px; transition: background 0.3s ease; }
-    .contact form button:hover { background: #001a42; }
+    /* About & Privacy */
+    .about-section { background:#fff; padding:60px 0; }
+    .about-section h2 { font-size:2.5rem; text-align:center; margin-bottom:40px; color:#002D62; }
+    .about-columns { display:flex; flex-wrap:wrap; justify-content:space-around; gap:20px; }
+    .about-column { flex:1 1 300px; background:#f9f9f9; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .about-column h3 { margin-bottom:15px; color:#002D62; }
+    .about-column p  { line-height:1.6; }
+
+    /* Contact */
+    .contact { background:#eef4f9; padding:60px 0; text-align:center; }
+    .contact h2 { font-size:2.5rem; margin-bottom:30px; color:#002D62; }
+    .contact form { max-width:600px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+    .contact form input, .contact form textarea { padding:15px; border:1px solid #ccc; border-radius:5px; font-size:1rem; width:100%; }
+    .contact form button { padding:15px; font-size:1.1rem; border:none; background:#002D62; color:#fff; border-radius:5px; cursor:pointer; transition:background 0.3s; }
+    .contact form button:hover { background:#001a42; }
 
     /* Footer */
-    footer { background: #333; color: #fff; text-align: center; padding: 25px 0; }
+    footer { background:#333; color:#fff; text-align:center; padding:25px 0; }
 
-    /* Chatbot Styles */
+    /* Chatbot */
     .chatbot-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #002D62;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      z-index: 1100;
+      position:fixed; bottom:20px; right:20px;
+      background:#002D62; color:#fff; border:none;
+      border-radius:50%; width:60px; height:60px;
+      font-size:1.5rem; cursor:pointer; z-index:1100;
     }
     .chatbot-window {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 300px;
-      max-height: 400px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      display: none;
-      flex-direction: column;
-      z-index: 1100;
+      position:fixed; bottom:90px; right:20px;
+      width:300px; max-height:400px; background:#fff;
+      border:1px solid #ccc; border-radius:10px;
+      display:none; flex-direction:column; z-index:1100;
     }
     .chatbot-header {
-      background: #002D62;
-      color: #fff;
-      padding: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background:#002D62; color:#fff; padding:10px;
+      border-top-left-radius:10px; border-top-right-radius:10px;
+      display:flex; justify-content:space-between; align-items:center;
     }
-    .chatbot-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .chatbot-input {
-      display: flex;
-      border-top: 1px solid #ccc;
-    }
-    .chatbot-input input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-bottom-left-radius: 10px;
-    }
-    .chatbot-input button {
-      padding: 10px;
-      background: #002D62;
-      color: #fff;
-      border: none;
-      border-bottom-right-radius: 10px;
-      cursor: pointer;
-    }
+    .chatbot-messages { flex:1; padding:10px; overflow-y:auto; }
+    .chatbot-input { display:flex; border-top:1px solid #ccc; }
+    .chatbot-input input { flex:1; padding:10px; border:none; border-bottom-left-radius:10px; }
+    .chatbot-input button { padding:10px; background:#002D62; color:#fff; border:none; border-bottom-right-radius:10px; cursor:pointer; }
     .sample-question {
-      cursor: pointer;
-      background: #eef4f9;
-      padding: 5px 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin: 5px;
-      display: inline-block;
+      cursor:pointer; background:#eef4f9; padding:5px 10px;
+      border:1px solid #ccc; border-radius:5px; margin:5px;
+      display:inline-block;
     }
   </style>
 </head>
@@ -257,7 +192,6 @@
     <div class="container header-inner">
       <div class="logo">
         <a href="#hero">
-          <!-- Neuron Logo with bright diamond colour -->
           <svg xmlns="http://www.w3.org/2000/svg" width="300" height="60" viewBox="0 0 300 60">
             <g id="neuron" transform="translate(10,10)">
               <circle cx="15" cy="15" r="4" fill="#b9f2ff" />
@@ -267,14 +201,17 @@
               <line x1="15" y1="15" x2="25" y2="30" stroke="#b9f2ff" stroke-width="1" />
               <line x1="35" y1="15" x2="25" y2="30" stroke="#b9f2ff" stroke-width="1" />
             </g>
-            <text x="70" y="40" font-family="Roboto, sans-serif" font-size="28" fill="#fff" font-weight="700">AmiAI</text>
+            <!-- AmiAi with dotless‐i and two red blinking circles as dots -->
+            <text x="70" y="40" font-family="Roboto, sans-serif" font-size="28" fill="#fff" font-weight="700">
+              AmıAı
+            </text>
+            <circle class="blinking-dot" cx="116" cy="16" r="3" />
+            <circle class="blinking-dot" cx="143" cy="16" r="3" />
           </svg>
         </a>
       </div>
       <div class="menu-toggle" id="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
       <nav>
         <ul id="nav-list">
@@ -292,20 +229,42 @@
     </div>
   </header>
 
-  <!-- Hero Section with Background Video -->
+  <!-- Hero Section -->
   <section id="hero" class="hero">
     <video autoplay muted loop>
       <source src="https://cdn.pixabay.com/video/2020/06/24/43022-434334062_tiny.mp4" />
       Your browser does not support the video tag.
     </video>
     <div class="hero-content container">
-      <h1>Welcome to AmiAI</h1>
+      <h1>Welcome to AmiAi</h1>
       <p class="animated-tagline">Transform your business with AI-powered automation</p>
       <button onclick="openFreeJourney()">Start your AI Journey for Free</button>
     </div>
   </section>
+<!-- Stock Prediction Section -->
+  <section id="stock-prediction" class="services">
+    <div class="container">
+      <h2>Stock Prediction</h2>
+      <form method="POST" style="display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end;">
+        <input type="text"   name="ticker"     placeholder="Ticker (e.g. RELIANCE.NS)" required />
+        <input type="date"   name="start_date" required />
+        <input type="date"   name="end_date"   required />
+        <button type="submit" style="padding:10px 20px; background:#002D62; color:#fff; border:none; border-radius:5px;">
+          Predict
+        </button>
+      </form>
+      {% if chart_png %}
+        <div style="margin-top:20px;">
+          <img src="data:image/png;base64,{{ chart_png }}" alt="Forecast chart" style="max-width:100%; border:1px solid #ccc;" />
+          <p style="margin-top:10px; font-size:1.1rem;">
+            Recommendation: <strong>{{ recommendation }}</strong>
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
 
-  <!-- Modal Popup for User Inquiry (if needed) -->
+  <!-- Modal Popup -->
   <div id="popupModal" class="modal">
     <div class="modal-content">
       <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -319,7 +278,7 @@
     </div>
   </div>
 
-  <!-- Services Section -->
+  <!-- Services -->
   <section id="services" class="services">
     <div class="container">
       <h2>Our Services</h2>
@@ -340,91 +299,77 @@
     </div>
   </section>
 
-   <!-- Slideshow Section - AI Importance for the Future -->
+  <!-- Slideshow -->
   <section id="slideshow" class="slideshow">
     <div class="container">
       <h2>AI Importance for the Future</h2>
       <div class="slider">
         <div class="slides">
-          <!-- Slide 1 -->
           <div class="slide">
             <h3>$15.7 Trillion</h3>
             <p>Global economic impact of AI by 2030</p>
             <span>Source: PwC, 2017</span>
           </div>
-          <!-- Slide 2 -->
           <div class="slide">
             <h3>40% Productivity Increase</h3>
             <p>Boost in productivity across industries</p>
             <span>Source: Accenture, 2018</span>
           </div>
-          <!-- Slide 3 -->
           <div class="slide">
             <h3>50% Faster Growth</h3>
             <p>AI-driven businesses growing at accelerated rates</p>
             <span>Source: McKinsey, 2019</span>
           </div>
-          <!-- Slide 4 -->
           <div class="slide">
             <h3>35% CAGR</h3>
             <p>Forecasted annual growth in AI adoption</p>
             <span>Source: IDC, 2020</span>
           </div>
-          <!-- Slide 5 -->
           <div class="slide">
             <h3>$190 Billion</h3>
             <p>AI market size expected by 2025</p>
             <span>Source: Tractica, 2020</span>
           </div>
-          <!-- Slide 6 -->
           <div class="slide">
             <h3>30% Cost Reduction</h3>
             <p>Potential reduction in operational costs</p>
             <span>Source: Capgemini, 2019</span>
           </div>
-          <!-- Slide 7 -->
           <div class="slide">
             <h3>270% Increase in Adoption</h3>
             <p>Rise in AI adoption among small businesses</p>
             <span>Source: Deloitte, 2018</span>
           </div>
-          <!-- Slide 8 -->
           <div class="slide">
             <h3>89% Increased Revenue</h3>
             <p>Businesses reporting revenue boosts with AI</p>
             <span>Source: McKinsey, 2021</span>
           </div>
-          <!-- Slide 9 -->
           <div class="slide">
             <h3>25% Increase in Customer Satisfaction</h3>
             <p>Enhanced customer service with AI integration</p>
             <span>Source: Gartner, 2020</span>
           </div>
-          <!-- Slide 10 -->
           <div class="slide">
             <h3>70% Enterprise Integration</h3>
             <p>Enterprises integrating AI by 2022</p>
             <span>Source: IDC, 2020</span>
           </div>
-          <!-- Slide 11 -->
           <div class="slide">
             <h3>20% Faster Decision-Making</h3>
             <p>Improved decision speeds via AI</p>
             <span>Source: BCG, 2019</span>
           </div>
-          <!-- Slide 12 -->
           <div class="slide">
             <h3>$150 Billion Annual Savings</h3>
             <p>Projected savings in healthcare</p>
             <span>Source: Accenture, 2017</span>
           </div>
-          <!-- Slide 13 -->
           <div class="slide">
             <h3>80% Enterprise Investment</h3>
             <p>Investments in AI R&D by leading enterprises</p>
             <span>Source: PwC, 2018</span>
           </div>
-          <!-- Slide 14 -->
           <div class="slide">
             <h3>14% Increase in Global GDP</h3>
             <p>Potential rise in global GDP from AI-enabled automation</p>
@@ -438,17 +383,16 @@
       </div>
     </div>
   </section>
-  <!-- Our Approach Section -->
+
+  <!-- Approach -->
   <section id="approach" class="approach">
     <div class="container">
       <h2>Our Approach</h2>
-      <p>
-        At AmiAI, our mission is to empower businesses with intelligent automation solutions. We work closely with our clients to understand their unique challenges and craft scalable, ethical, and transparent AI strategies that drive growth.
-      </p>
+      <p>At AmiAi, our mission is to empower businesses with intelligent automation solutions. We work closely with our clients to understand their unique challenges and craft scalable, ethical, and transparent AI strategies that drive growth.</p>
     </div>
   </section>
 
-  <!-- AI Game Section: Rock, Paper, Scissors -->
+  <!-- AI Game -->
   <section id="game" class="game">
     <div class="container">
       <h2>AI Game: Rock, Paper, Scissors</h2>
@@ -462,42 +406,21 @@
     </div>
   </section>
 
-  <!-- FAQ Section -->
+  <!-- FAQ -->
   <section id="faq" class="faq">
     <div class="container">
       <h2>Frequently Asked Questions</h2>
-      <div class="faq-item">
-        <h3>What services does AmiAI offer?</h3>
-        <p>We provide consulting, custom AI automation solutions, and dedicated support to transform your business operations.</p>
-      </div>
-      <div class="faq-item">
-        <h3>How can AI improve my business?</h3>
-        <p>AI streamlines processes, reduces costs, boosts productivity, and delivers actionable insights for smarter decision-making.</p>
-      </div>
-      <div class="faq-item">
-        <h3>Which industries benefit from your solutions?</h3>
-        <p>Our tailored solutions work for finance, healthcare, retail, manufacturing, and more.</p>
-      </div>
-      <div class="faq-item">
-        <h3>How do I get started?</h3>
-        <p>Simply click on the "Start your AI Journey for Free" button or contact us directly.</p>
-      </div>
-      <div class="faq-item">
-        <h3>What sets AmiAI apart?</h3>
-        <p>We combine transparency, ethical practices, and customized strategies to deliver measurable business value.</p>
-      </div>
-      <div class="faq-item">
-        <h3>How do you ensure data security?</h3>
-        <p>We follow industry best practices and data protection regulations to keep your information secure.</p>
-      </div>
-      <div class="faq-item">
-        <h3>Do you offer post-implementation support?</h3>
-        <p>Yes, we provide ongoing support and maintenance to ensure continuous success after deployment.</p>
-      </div>
+      <div class="faq-item"><h3>What services does AmiAi offer?</h3><p>We provide consulting, custom AI automation solutions, and dedicated support to transform your business operations.</p></div>
+      <div class="faq-item"><h3>How can AI improve my business?</h3><p>AI streamlines processes, reduces costs, boosts productivity, and delivers actionable insights for smarter decision-making.</p></div>
+      <div class="faq-item"><h3>Which industries benefit from your solutions?</h3><p>Our tailored solutions work for finance, healthcare, retail, manufacturing, and more.</p></div>
+      <div class="faq-item"><h3>How do I get started?</h3><p>Simply click on the "Start your AI Journey for Free" button or contact us directly.</p></div>
+      <div class="faq-item"><h3>What sets AmiAi apart?</h3><p>We combine transparency, ethical practices, and customized strategies to deliver measurable business value.</p></div>
+      <div class="faq-item"><h3>How do you ensure data security?</h3><p>We follow industry best practices and data protection regulations to keep your information secure.</p></div>
+      <div class="faq-item"><h3>Do you offer post-implementation support?</h3><p>Yes, we provide ongoing support and maintenance to ensure continuous success after deployment.</p></div>
     </div>
   </section>
 
-  <!-- Newsletter Section -->
+  <!-- Newsletter -->
   <section id="newsletter" class="newsletter">
     <div class="container">
       <h2>Subscribe for Updates</h2>
@@ -508,35 +431,25 @@
     </div>
   </section>
 
-  <!-- About & Privacy Section -->
+  <!-- About & Privacy -->
   <section id="about-section" class="about-section">
     <div class="container">
       <h2>About Us & Privacy Policy</h2>
       <div class="about-columns">
         <div class="about-column">
           <h3>About Us</h3>
-          <p>
-            <strong>Sourav Karmakar, MBA</strong><br />
-            Department of Data Science and AI<br />
-            Chandigarh University, Punjab, India
-          </p>
-          <p>
-            <strong>Debraj Mukherjee</strong><br />
-            Ex-IBM, B.Tech in Computer Science<br />
-            IEM College, Kolkata
-          </p>
+          <p><strong>Sourav Karmakar, MBA</strong><br />Department of Data Science and AI<br />Chandigarh University, Punjab, India</p>
+          <p><strong>Debraj Mukherjee</strong><br />Ex-IBM, B.Tech in Computer Science<br />IEM College, Kolkata</p>
         </div>
         <div class="about-column">
           <h3>Privacy Policy</h3>
-          <p>
-            At AmiAI, your privacy is paramount. We are dedicated to protecting your personal data and being transparent about how we collect, use, and store your information. Please review our complete privacy policy for more details.
-          </p>
+          <p>At AmiAi, your privacy is paramount. We are dedicated to protecting your personal data and being transparent about how we collect, use, and store your information. Please review our complete privacy policy for more details.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact -->
   <section id="contact" class="contact">
     <div class="container">
       <h2>Contact Us</h2>
@@ -552,11 +465,11 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 AmiAI. All rights reserved.</p>
+      <p>&copy; 2025 AmiAi. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Chatbot Feature -->
+  <!-- Chatbot -->
   <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
   <div class="chatbot-window" id="chatbotWindow">
     <div class="chatbot-header">
@@ -571,149 +484,98 @@
   </div>
 
   <script>
-    // Function to open the Google Forms link in a new tab
+    // counters for success rate
+    let gameCount = 0, winCount = 0;
+
     function openFreeJourney() {
-      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
+      window.open("https://forms.gle/6QTF75A1N7PS4CG77","_blank");
     }
+    function openModal(){ document.getElementById("popupModal").style.display="block"; }
+    function closeModal(){ document.getElementById("popupModal").style.display="none"; }
+    window.onclick = e => { if(e.target==document.getElementById("popupModal")) closeModal(); };
 
-    // Modal Popup Functions (if needed)
-    function openModal() {
-      document.getElementById("popupModal").style.display = "block";
-    }
-    function closeModal() {
-      document.getElementById("popupModal").style.display = "none";
-    }
-    window.onclick = function(event) {
-      const modal = document.getElementById("popupModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-
-    // Override form submissions to open Google Forms link
-    document.getElementById("contactForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
+    // override forms
+    document.getElementById("contactForm")?.addEventListener("submit", e=>{
+      e.preventDefault(); openFreeJourney();
     });
-    document.getElementById("newsletterForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      window.open("https://forms.gle/6QTF75A1N7PS4CG77", "_blank");
+    document.getElementById("newsletterForm")?.addEventListener("submit", e=>{
+      e.preventDefault(); openFreeJourney();
     });
 
-    // Slideshow functionality
+    // slideshow
     const slides = document.querySelector('.slides');
-    const slideElements = document.querySelectorAll('.slide');
-    let currentIndex = 0;
-    document.getElementById('next').addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % slideElements.length;
-      updateSlider();
+    const slideEls = document.querySelectorAll('.slide');
+    let idx=0;
+    document.getElementById('next').addEventListener('click', ()=>{
+      idx=(idx+1)%slideEls.length; slides.style.transform=`translateX(${-idx*100}%)`;
     });
-    document.getElementById('prev').addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + slideElements.length) % slideElements.length;
-      updateSlider();
+    document.getElementById('prev').addEventListener('click', ()=>{
+      idx=(idx-1+slideEls.length)%slideEls.length; slides.style.transform=`translateX(${-idx*100}%)`;
     });
-    function updateSlider() {
-      slides.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
-    }
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % slideElements.length;
-      updateSlider();
-    }, 5000);
+    setInterval(()=>{ idx=(idx+1)%slideEls.length; slides.style.transform=`translateX(${-idx*100}%)`; },5000);
 
-    // Mobile navigation toggle
-    const menuToggle = document.getElementById('mobile-menu');
-    const navList = document.getElementById('nav-list');
-    menuToggle.addEventListener('click', () => {
-      if (navList.style.display === "flex") {
-        navList.style.display = "none";
-      } else {
-        navList.style.display = "flex";
-        navList.style.flexDirection = "column";
-      }
+    // mobile nav
+    document.getElementById('mobile-menu').addEventListener('click', ()=>{
+      const nav=document.getElementById('nav-list');
+      if(nav.style.display==='flex') nav.style.display='none';
+      else { nav.style.display='flex'; nav.style.flexDirection='column'; }
     });
 
-    // Chatbot Feature with sample clickable questions
-    const faqData = [
-      { question: "What services does AmiAI offer?", answer: "We provide consulting, custom AI automation solutions, and dedicated support." },
-      { question: "How can AI improve my business?", answer: "AI streamlines processes, reduces costs, and delivers actionable insights." },
-      { question: "Which industries benefit from your solutions?", answer: "Our solutions benefit finance, healthcare, retail, manufacturing, and more." },
-      { question: "How do I get started?", answer: "Click the 'Start your AI Journey for Free' button to begin." },
-      { question: "What sets AmiAI apart?", answer: "We combine transparency, ethical practices, and customized strategies for measurable impact." },
-      { question: "How do you ensure data security?", answer: "We adhere to industry best practices and data protection regulations." },
-      { question: "Do you offer post-implementation support?", answer: "Yes, we provide ongoing support after deployment." }
+    // chatbot
+    const faqData=[
+      {q:"What services does AmiAi offer?",a:"We provide consulting, custom AI automation solutions, and dedicated support."},
+      {q:"How can AI improve my business?",a:"AI streamlines processes, reduces costs, and delivers actionable insights."},
+      {q:"Which industries benefit from your solutions?",a:"Our solutions benefit finance, healthcare, retail, manufacturing, and more."},
+      {q:"How do I get started?",a:"Click the 'Start your AI Journey for Free' button to begin."},
+      {q:"What sets AmiAi apart?",a:"We combine transparency, ethical practices, and customized strategies for measurable impact."},
+      {q:"How do you ensure data security?",a:"We adhere to industry best practices and data protection regulations."},
+      {q:"Do you offer post-implementation support?",a:"Yes, we provide ongoing support after deployment."}
     ];
-    function toggleChatbot() {
-      const chatbotWindow = document.getElementById("chatbotWindow");
-      const messageContainer = document.getElementById("chatbotMessages");
-      if (chatbotWindow.style.display === "flex") {
-        chatbotWindow.style.display = "none";
-      } else {
-        chatbotWindow.style.display = "flex";
-        messageContainer.innerHTML = "";
-        let sampleContainer = document.createElement("div");
-        sampleContainer.style.marginBottom = "10px";
-        sampleContainer.textContent = "Click a sample question:";
-        faqData.forEach(item => {
-          let sampleBox = document.createElement("div");
-          sampleBox.className = "sample-question";
-          sampleBox.textContent = item.question;
-          sampleBox.onclick = () => {
-            document.getElementById("chatbotInput").value = item.question;
-            sendChat();
-          };
-          sampleContainer.appendChild(sampleBox);
+    function toggleChatbot(){
+      const win=document.getElementById("chatbotWindow"), msgs=document.getElementById("chatbotMessages");
+      if(win.style.display==='flex'){win.style.display='none';}
+      else{
+        win.style.display='flex'; msgs.innerHTML='';
+        const container=document.createElement("div"); container.style.marginBottom="10px";
+        container.textContent="Click a sample question:";
+        faqData.forEach(item=>{
+          const btn=document.createElement("div");
+          btn.className="sample-question"; btn.textContent=item.q;
+          btn.onclick=()=>{ document.getElementById("chatbotInput").value=item.q; sendChat(); };
+          container.appendChild(btn);
         });
-        messageContainer.appendChild(sampleContainer);
+        msgs.appendChild(container);
       }
     }
-    function sendChat() {
-      const inputField = document.getElementById("chatbotInput");
-      const messageContainer = document.getElementById("chatbotMessages");
-      let userText = inputField.value.trim();
-      if (!userText) return;
-      let userMsg = document.createElement("div");
-      userMsg.textContent = "You: " + userText;
-      messageContainer.appendChild(userMsg);
-      let answerFound = "Sorry, I don't have an answer for that.";
-      let lowerText = userText.toLowerCase();
-      faqData.forEach(faq => {
-        if(lowerText.includes(faq.question.toLowerCase())) {
-          answerFound = faq.answer;
-        }
-      });
-      let botMsg = document.createElement("div");
-      botMsg.style.marginTop = "10px";
-      botMsg.textContent = "Bot: " + answerFound;
-      messageContainer.appendChild(botMsg);
-      inputField.value = "";
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+    function sendChat(){
+      const input=document.getElementById("chatbotInput"), msgs=document.getElementById("chatbotMessages");
+      const text=input.value.trim(); if(!text) return;
+      const userMsg=document.createElement("div"); userMsg.textContent="You: "+text; msgs.appendChild(userMsg);
+      let reply="Sorry, I don't have an answer for that.";
+      faqData.forEach(f=>{ if(text.toLowerCase().includes(f.q.toLowerCase())) reply=f.a; });
+      const botMsg=document.createElement("div"); botMsg.style.marginTop="10px"; botMsg.textContent="Bot: "+reply;
+      msgs.appendChild(botMsg); input.value=""; msgs.scrollTop=msgs.scrollHeight;
     }
 
-    // Reset tagline animation every 15 seconds
-    setInterval(() => {
-      const tagline = document.querySelector('.animated-tagline');
-      tagline.style.animation = 'none';
-      void tagline.offsetWidth;
-      tagline.style.animation = 'typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite';
-    }, 15000);
+    // AI Game
+    function playGame(userChoice){
+      const choices=["rock","paper","scissors"];
+      const aiChoice=choices[Math.floor(Math.random()*choices.length)];
+      let result="";
+      if(userChoice===aiChoice) result="It's a tie!";
+      else if(
+        (userChoice==="rock"&&aiChoice==="scissors")||
+        (userChoice==="paper"&&aiChoice==="rock")||
+        (userChoice==="scissors"&&aiChoice==="paper")
+      ) result="You win!";
+      else result="You lose!";
 
-    // AI Game: Rock, Paper, Scissors logic
-    function playGame(userChoice) {
-      const choices = ["rock", "paper", "scissors"];
-      const aiChoice = choices[Math.floor(Math.random() * choices.length)];
-      let result = "";
-      if(userChoice === aiChoice) {
-        result = "It's a tie!";
-      } else if (
-        (userChoice === "rock" && aiChoice === "scissors") ||
-        (userChoice === "paper" && aiChoice === "rock") ||
-        (userChoice === "scissors" && aiChoice === "paper")
-      ) {
-        result = "You win!";
-      } else {
-        result = "You lose!";
-      }
-      document.getElementById("gameResult").textContent = "You chose " + userChoice + ". AI chose " + aiChoice + ". " + result;
+      gameCount++;
+      if(result==="You win!") winCount++;
+      const successRate=Math.round((winCount/10)*100);
+
+      document.getElementById("gameResult").textContent=
+        `You chose ${userChoice}. AI chose ${aiChoice}. ${result} Success Rate: ${successRate}% (out of 10)`;
     }
   </script>
 </body>
