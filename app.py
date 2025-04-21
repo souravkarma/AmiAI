@@ -1,58 +1,83 @@
 import io
 import base64
-from datetime import datetime
-import pandas as pd
-import yfinance as yf
-from prophet import Prophet
-from prophet.plot import add_changepoints_to_plot
-import matplotlib.pyplot as plt
 
 from flask import Flask, render_template, request
+from prophet import Prophet
+from prophet.plot import add_changepoints_to_plot
+import yfinance as yf
+import matplotlib.pyplot as plt
 
 app = Flask(__name__, template_folder='.', static_folder='.')
 
+def pred(x, start_date, end_date):
+    # Download stock data
+    df = yf.download(x, start=start_date, end=end_date)
+    # flatten multi‑level columns if any
+    df.columns = [col[0] if isinstance(col, tuple) else col for col in df.columns]
+    df = df.reset_index()
+
+    # Function to format dataframe for forecasting
+    def df_formatting(df_in):
+        df2 = df_in.loc[:, ['Date', 'Close']]
+        df2.rename(columns={'Date': 'ds', 'Close': 'y'}, inplace=True)
+        return df2
+
+    # Function for price forecasting
+    def price_forecasting(df_in, period):
+        m = Prophet(yearly_seasonality='auto')
+        m.fit(df_in)
+        future = m.make_future_dataframe(periods=period)
+        forecasts = m.predict(future)
+
+        # Plot the forecasts
+        fig = m.plot(forecasts)
+        add_changepoints_to_plot(fig.gca(), m, forecasts)
+        plt.title(x)
+
+        # Also plot components (optional)
+        m.plot_components(forecasts)
+
+        return forecasts, fig
+
+    # Function to provide buy/sell/hold recommendation
+    def buy_sell_recommendation(current_price, forecasted_price):
+        if forecasted_price > current_price:
+            return "Buy"
+        elif forecasted_price < current_price:
+            return "Sell"
+        else:
+            return "Hold"
+
+    # 1. Prepare data
+    df_prepped = df_formatting(df)
+    # 2. Forecast out 90 days (same as your snippet)
+    forecast, fig = price_forecasting(df_prepped, 90)
+
+    # 3. Determine recommendation
+    current_price    = df['Close'].iloc[-1]
+    forecasted_price = forecast['yhat'].iloc[-1]
+    recommendation   = buy_sell_recommendation(current_price, forecasted_price)
+
+    # 4. Convert matplotlib fig to base64 PNG
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight')
+    buf.seek(0)
+    png_b64 = base64.b64encode(buf.getvalue()).decode()
+    plt.close('all')
+
+    return png_b64, recommendation
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    chart_png = None
+    chart_png      = None
     recommendation = None
 
     if request.method == 'POST':
-        # 1. grab inputs
         ticker     = request.form['ticker'].upper().strip()
         start_date = request.form['start_date']
         end_date   = request.form['end_date']
 
-        # 2. download and prep data
-        df = yf.download(ticker, start=start_date, end=end_date)
-        df = df.reset_index()[['Date','Close']].rename(columns={'Date':'ds','Close':'y'})
-
-        # 3. fit Prophet
-        m = Prophet(yearly_seasonality='auto')
-        m.fit(df)
-
-        # 4. make future frame out to end_date
-        days = (pd.to_datetime(end_date) - pd.to_datetime(start_date)).days
-        future = m.make_future_dataframe(periods=days)
-        forecast = m.predict(future)
-
-        # 5. plot forecast
-        fig = m.plot(forecast, xlabel='Date', ylabel='Price')
-        add_changepoints_to_plot(fig.gca(), m, forecast)
-        plt.title(f'{ticker} Price Forecast')
-
-        # 6. grab image as PNG
-        buf = io.BytesIO()
-        fig.savefig(buf, format='png', bbox_inches='tight')
-        buf.seek(0)
-        chart_png = base64.b64encode(buf.getvalue()).decode()
-        plt.close(fig)
-
-        # 7. buy/sell recommendation
-        current_price    = df['y'].iloc[-1]
-        forecasted_price = forecast['yhat'].iloc[-1]
-        if   forecasted_price > current_price: recommendation = "Buy"
-        elif forecasted_price < current_price: recommendation = "Sell"
-        else:                                   recommendation = "Hold"
+        chart_png, recommendation = pred(ticker, start_date, end_date)
 
     return render_template('index.html',
                            chart_png=chart_png,
